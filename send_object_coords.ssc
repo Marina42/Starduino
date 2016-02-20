@@ -1,0 +1,12 @@
+//
+// Name: Send Object Coordinates
+// License: Public Domain
+// Author: HackUPC2016
+// Shortcut: Ctrl+K,3
+// Description: Sends an object coordinates to the Arduino laser pointer.
+//
+
+TargetData = core.getSelectedObjectInfo();
+TargetGeoAzi = TargetData["azimuth-geometric"];
+TargetGeoAlt = TargetData["altitude-geometric"];
+core.output(TargetGeoAzi + " " + TargetGeoAlt);
