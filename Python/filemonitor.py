@@ -3,7 +3,7 @@ from PyQt4 import QtGui
 import sys
 from time import sleep
 import serial
-ser = serial.Serial('/dev/tty.usbmodem1411', 9600) # Establish the connection on a specific port
+ser = serial.Serial('/dev/cu.usbmodem1411', 9600) # Establish the connection on a specific port
 
 app = QtGui.QApplication(sys.argv)
 
@@ -14,8 +14,9 @@ filepath = '/Users/marina/Library/Application Support/Stellarium/output.txt'
 @QtCore.pyqtSlot(str)
 def file_changed(path):
     coordFile = open(filepath, 'r')
-    print file.readline(coordFile)
-    ser.write(str('hello')) # Convert the decimal number to ASCII then send it to the Arduino
+    line = coordFile.readline()
+    ser.write(str(line))
+    #ser.write(str('hello')) # Convert the decimal number to ASCII then send it to the Arduino
     print ser.readline() # Read the newest output from the Arduino
     coordFile.close()
     sleep(.1) # Delay for one tenth of a second
