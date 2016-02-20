@@ -20,7 +20,7 @@ void loop() {
   {
     String inStr1 = Serial.readString(); // read the incoming azimuth
     String inStr2 = Serial.readString(); // read the incoming altitude
-    
+   
     char aziBuf[inStr1.length()+1];
     char altiBuf[inStr2.length()+1];
 
@@ -33,16 +33,20 @@ void loop() {
     aziservo.write(0);
     altiservo.write(0);
 
+    // If azimuth is over 180 degrees, let's fix this (servomotors rotate to a max of 180 degrees)
     if (azimuth > 180)
     {
-      azimuth =-180;
-      altitude =-90;
+      azimuth = azimuth - 180;
+      altitude = altitude - 90;
     }
 
     aziservo.write(azimuth);
     altiservo.write(altitude);
-    
-    Serial.println(inStr1 + " " + inStr2); // send the data back in a new line so that it is not all one long line 
+
+    // send the data back in a new line so that it is not all one long line
+    Serial.print(azimuth);
+    Serial.print(" ");
+    Serial.println(altitude);
   }
   
   delay(100); // delay for 1/10 of a second
