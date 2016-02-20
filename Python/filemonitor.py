@@ -15,6 +15,7 @@ filepath = '/Users/marina/Library/Application Support/Stellarium/output.txt'
 def file_changed(path):
     coordFile = open(filepath, 'r')
     line = coordFile.readline()
+    print line
     ser.write(str(line))
     #ser.write(str('hello')) # Convert the decimal number to ASCII then send it to the Arduino
     print ser.readline() # Read the newest output from the Arduino

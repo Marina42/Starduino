@@ -9,4 +9,6 @@
 TargetData = core.getSelectedObjectInfo();
 TargetGeoAzi = TargetData["azimuth-geometric"];
 TargetGeoAlt = TargetData["altitude-geometric"];
+core.resetOutput();
 core.output(TargetGeoAzi + " " + TargetGeoAlt);
+//core.output(0+" "+0);
