@@ -11,5 +11,9 @@ TargetGeoAzi = TargetData["azimuth-geometric"];
 TargetGeoAlt = TargetData["altitude-geometric"];
 TargetName = TargetData["name"];
 core.resetOutput();
+
+//COMMENT TO CALIBRATE
 core.output(TargetGeoAzi + " " + TargetGeoAlt + " " + TargetName);
+
+//UNCOMMENT TO CALIBRATE
 //core.output(0+" "+0);

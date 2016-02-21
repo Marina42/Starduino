@@ -9,17 +9,19 @@ app = QtGui.QApplication(sys.argv)
 
 print('wirks')
 
-#FIX THIS
+###############   ATTENTION  ###############
+#You MUST change the following line to your Stellarium output.txt file. Else IT WILL NOT WORK.
 filepath = '/Users/marina/Library/Application Support/Stellarium/output.txt'
+#############################################
 
+#this gets called everytime the output file is changed, the script is monitoring the file in the background
 @QtCore.pyqtSlot(str)
 def file_changed(path):
     coordFile = open(filepath, 'r')
     line = coordFile.readline()
     print line
     ser.write(str(line))
-    #ser.write(str('hello')) # Convert the decimal number to ASCII then send it to the Arduino
-    print ser.readline() # Read the newest output from the Arduino
+    print ser.readline() # Read the newest output from the Arduino to check the connection went OK
     coordFile.close()
     sleep(.1) # Delay for one tenth of a second
 

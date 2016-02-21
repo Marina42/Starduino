@@ -11,9 +11,9 @@ const int IMPERIALMARCH_PIN = 7;
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 void setup() {
-
   Serial.begin(9600); // set the baud rate
-  Serial.println("Ready"); // print "Ready" once
+  // print "Ready" once to check the serial comm is well configured
+  Serial.println("Ready"); 
   aziservo.attach(AZI_SERVO_PIN);
   altiservo.attach(ALTI_SERVO_PIN);
   aziservo.write(0);
@@ -36,31 +36,27 @@ void loop() {
   // set the cursor to column 0, line 1
   // (note: line 1 is the second row, since counting begins with 0):
   lcd.setCursor(0, 1);
-  // print the number of seconds since reset:
-  if (Serial.available()) // only send data back if data has been sent
-  {
+  if (Serial.available()){
     digitalWrite(LAZOR_PIN, LOW);
-
-    String inStr = Serial.readString(); // read the incoming azimuth
-    //Serial.print(inStr);
+    //We now have to get the azmiuth, altitude and name of the object
+    String inStr = Serial.readString(); 
     int separationIndex = inStr.indexOf(' ');
-    String aziString = inStr.substring(0, separationIndex);
+    String aziString = inStr.substring(0, separationIndex); // read the incoming azimuth
     inStr = inStr.substring(separationIndex+1);
     separationIndex = inStr.indexOf(' ');
-    String altiString = inStr.substring(0, separationIndex);
-    String starName, starName1, starName2;
+    String altiString = inStr.substring(0, separationIndex); // read the incoming altitude
+    String starName, starName1, starName2; // read the incoming object name
+    starName = inStr.substring(separationIndex+1, inStr.length()-1);
 
     // Detects whether we have to split the name of the star
     // into two different lines, so that we don't lose data
     bool twolines = false;
-    if (inStr.length() > 16)
+    if (starName.length() > 16)
     {
-       starName1 = inStr.substring(0, 15);
-       starName2 = inStr.substring(15, inStr.length()-1);
+       starName1 = starName.substring(0, 15);
+       starName2 = starName.substring(15, starName.length());
        twolines = true;
     }
-    
-    starName = inStr.substring(separationIndex+1, inStr.length()-1);
     
     Serial.print(inStr+" "+starName);
 
@@ -76,7 +72,7 @@ void loop() {
       lcd.print(starName2);
     }
     
-
+    //get the in values of the coordinates and translate them to servo rotation.
     int azimuth = aziString.toInt();
     int altitude = altiString.toInt();
 
@@ -105,7 +101,7 @@ void loop() {
   }
 
   if (digitalRead(IMPERIALMARCH_PIN) == HIGH){
-    Serial.print("bu");
+    Serial.print("HO HO HO, you fount the easter egg! <3");
     imperialMarch();
   }
 
