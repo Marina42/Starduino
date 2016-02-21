@@ -9,6 +9,7 @@ app = QtGui.QApplication(sys.argv)
 
 print('wirks')
 
+#FIX THIS
 filepath = '/Users/marina/Library/Application Support/Stellarium/output.txt'
 
 @QtCore.pyqtSlot(str)
