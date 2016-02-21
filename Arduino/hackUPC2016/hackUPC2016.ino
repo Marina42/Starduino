@@ -48,11 +48,34 @@ void loop() {
     inStr = inStr.substring(separationIndex+1);
     separationIndex = inStr.indexOf(' ');
     String altiString = inStr.substring(0, separationIndex);
-    String starName = inStr.substring(separationIndex+1, inStr.length()-1);
+    String starName, starName1, starName2;
+
+    // Detects whether we have to split the name of the star
+    // into two different lines, so that we don't lose data
+    bool twolines = false;
+    if (inStr.length() > 16)
+    {
+       starName1 = inStr.substring(0, 15);
+       starName2 = inStr.substring(15, inStr.length()-1);
+       twolines = true;
+    }
+    
+    starName = inStr.substring(separationIndex+1, inStr.length()-1);
+    
     Serial.print(inStr+" "+starName);
 
     lcd.clear();
-    lcd.print(starName);
+    if (!twolines)
+    {
+      lcd.print(starName);
+    }
+    else
+    {
+      lcd.print(starName1);
+      lcd.setCursor(1,1);
+      lcd.print(starName2);
+    }
+    
 
     int azimuth = aziString.toInt();
     int altitude = altiString.toInt();
